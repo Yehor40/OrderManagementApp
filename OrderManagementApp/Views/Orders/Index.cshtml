@@ -58,11 +58,13 @@
             {
                 // Highlight red if Status Code is 'C' (Cancelled)
                 var rowStyle = item.StatusCode == 'C' ? "table-danger" : "";
+                // Bold if amount is greater than 10000
+                var amountStyle = item.Amount > 10000 ? "fw-bold" : "";
                 
                 <tr class="@rowStyle">
                     <td>@item.Date.ToShortDateString()</td>
                     <td>@item.CustomerName</td>
-                    <td>@item.Amount.ToString("C")</td>
+                    <td class="@amountStyle">@item.Amount.ToString("C")</td>
                     <td>
                         <span class="badge @(item.StatusCode == 'C' ? "bg-danger" : "bg-info")">
                             @item.Status?.StatusName
