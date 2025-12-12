@@ -1,0 +1,39 @@
+@model OrderManagementApp.ViewModels.CreateOrderViewModel
+
+<div class="container mt-4">
+    <h4>Create New Order</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post" asp-controller="Orders">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="SelectedCustomerId" class="form-label">Customer</label>
+                    <select asp-for="SelectedCustomerId" class="form-select" asp-items="Model.CustomerList">
+                        <option value="">-- Select Customer --</option>
+                    </select>
+                    <span asp-validation-for="SelectedCustomerId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Amount" class="form-label">Amount</label>
+                    <input asp-for="Amount" class="form-control" type="number" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SelectedStatusCode" class="form-label">Status</label>
+                    <select asp-for="SelectedStatusCode" class="form-select" asp-items="Model.StatusList">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                    <span asp-validation-for="SelectedStatusCode" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">Save Order</button>
+                <a asp-action="Index" asp-controller="Orders" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

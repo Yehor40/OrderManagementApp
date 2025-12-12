@@ -1,0 +1,78 @@
+@model OrderManagementApp.ViewModels.OrdersViewModel
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📊 Order Dashboard</h2>
+        <a asp-action="Create" asp-controller="Orders" class="btn btn-primary">+ Add New Order</a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-primary p-3">
+                <small class="text-muted">Total Turnover</small>
+                <h3 class="text-primary">@Model.Summary.TotalTurnover.ToString("C")</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-success p-3">
+                <small class="text-muted">Average Order</small>
+                <h3 class="text-success">@Model.Summary.AverageOrderValue.ToString("C")</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-info p-3">
+                <small class="text-muted">Top Customer</small>
+                <h3 class="text-info">@Model.Summary.TopCustomer</h3>
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Index" method="get" class="row g-3 mb-4 p-3 bg-light border rounded">
+        <div class="col-md-4">
+            <select name="selectedCustomer" asp-items="Model.CustomerList" class="form-select">
+                <option value="0">-- All Customers --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select name="selectedStatus" asp-items="Model.StatusList" class="form-select">
+                <option value="0">-- All Statuses --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-dark w-100">Apply Filters</button>
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead class="table-secondary">
+            <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                // Highlight red if Status Code is 'C' (Cancelled)
+                var rowStyle = item.StatusCode == 'C' ? "table-danger" : "";
+                
+                <tr class="@rowStyle">
+                    <td>@item.Date.ToShortDateString()</td>
+                    <td>@item.CustomerName</td>
+                    <td>@item.Amount.ToString("C")</td>
+                    <td>
+                        <span class="badge @(item.StatusCode == 'C' ? "bg-danger" : "bg-info")">
+                            @item.Status?.StatusName
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Orders" asp-route-id="@item.OrderId" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
