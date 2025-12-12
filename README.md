@@ -1,15 +1,16 @@
 Technical Assignment
 Full-Stack Developer — Metrans a.s.
-Technologies Used
 
-.NET 8
+Technologies Used:
 
-ASP.NET Core
+-.NET 8
 
-Entity Framework Core
+-ASP.NET Core
 
-HTML, CSS, Bootstrap, Razor Pages
+-Entity Framework Core
 
-SQL Server
+-HTML, CSS, Bootstrap, Razor Pages
 
-xUnit
+-SQL Server
+
+-xUnit
