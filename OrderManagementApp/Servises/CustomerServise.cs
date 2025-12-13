@@ -4,7 +4,7 @@ using OrderManagementApp.Data.Entities;
 
 namespace OrderManagementApp.Servises;
 
-public class CustomerServise: ICustomerServise
+public class CustomerServise : ICustomerServise
 {
     private readonly AppDbContext _context;
 
@@ -12,6 +12,7 @@ public class CustomerServise: ICustomerServise
     {
         _context = context;
     }
+
     public async Task<List<Customer>> GetAllCustomersAsync()
     {
         return await _context.Customers
