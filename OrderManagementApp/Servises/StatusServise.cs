@@ -4,7 +4,7 @@ using OrderManagementApp.Data.Entities;
 
 namespace OrderManagementApp.Servises;
 
-public class StatusServise:IStatusServise
+public class StatusServise : IStatusServise
 {
     private readonly AppDbContext _context;
 
@@ -12,6 +12,7 @@ public class StatusServise:IStatusServise
     {
         _context = context;
     }
+
     public async Task<List<Status>> GetAllStatusesAsync()
     {
         return await _context.Statuses

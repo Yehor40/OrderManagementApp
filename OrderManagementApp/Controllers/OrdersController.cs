@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OrderManagementApp.Controllers;
+
 public class OrdersController : Controller
 {
     private readonly IOrderServise _orderService;
@@ -30,8 +31,8 @@ public class OrdersController : Controller
             Summary = await _orderService.GetOrderSummaryAsync(),
             SelectedStatus = selectedStatus,
             SelectedCustomer = selectedCustomer,
-            CustomerList = new SelectList(customers, "CustomerId", "CustomerName", selectedCustomer),
-            StatusList = new SelectList(statuses, "Code", "StatusName", selectedStatus)
+            CustomerList = new SelectList(customers, nameof(Customer.CustomerId), nameof(Customer.CustomerName),selectedCustomer),
+            StatusList = new SelectList(statuses, nameof(Status.Code), nameof(Status.StatusName),selectedStatus)
         };
 
         return View(viewModel);
@@ -44,8 +45,8 @@ public class OrdersController : Controller
         var statuses = await _statusService.GetAllStatusesAsync();
         var model = new CreateOrderViewModel
         {
-            CustomerList = new SelectList(customers ,"CustomerId", "CustomerName"),
-            StatusList = new SelectList(statuses, "Code", "StatusName")
+            CustomerList = new SelectList(customers, nameof(Customer.CustomerId), nameof(Customer.CustomerName)),
+            StatusList = new SelectList(statuses, nameof(Status.Code), nameof(Status.StatusName))
         };
         return View(model);
     }
@@ -72,8 +73,8 @@ public class OrdersController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        model.CustomerList = new SelectList(await _customerService.GetAllCustomersAsync(), "CustomerId", "CustomerName");
-        model.StatusList = new SelectList(await _statusService.GetAllStatusesAsync(), "Code", "StatusName");
+        model.CustomerList = new SelectList(await _customerService.GetAllCustomersAsync(), nameof(Customer.CustomerId),nameof(Customer.CustomerName));
+        model.StatusList = new SelectList(await _statusService.GetAllStatusesAsync(), nameof(Status.Code), nameof(Status.StatusName));
         return View(model);
     }
 
@@ -86,7 +87,7 @@ public class OrdersController : Controller
         }
 
         var order = await _orderService.GetOrderByIdAsync(id.Value);
-        
+
         if (order == null)
         {
             return NotFound();
